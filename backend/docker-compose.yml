@@ -1,0 +1,30 @@
+services:
+    php:
+        container_name: api_alunos
+        build:
+            context: .
+            dockerfile: .docker/apache/dockerfile
+        image: 'ubuntu-laravel'
+        ports:
+            - 80:80
+        volumes:
+            - .:/var/www/html
+
+    mysqlsrv:
+      container_name: mysql_api_alunos
+      image: mysql:5.7
+      command: --explicit_defaults_for_timestamp
+      environment:
+        MYSQL_ROOT_PASSWORD: "yFY27OLGXf^h~V"
+        MYSQL_DATABASE: "academico"
+      ports:
+        - "3306:3306"
+      volumes:
+        - .:/var/lib/sql
+      networks:
+        - mysql-compose-network
+
+
+networks: 
+  mysql-compose-network:
+    driver: bridge
